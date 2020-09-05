@@ -1,4 +1,5 @@
 Comandos executados:
+
 nodejs
  - 
 
@@ -19,8 +20,8 @@ yarn
  - yarn add currency-formatter
 
 Tecnologias utilizadas:
-https://bootswatch.com (themes for bootstrap)
-https://reactrouter.com (used for creation routes)
-https://github.com/axios/axios (used for http request)
-https://codeseven.github.io/toastr (used for system notifications)create
-https://www.npmjs.com/package/currency-formatter (used for formmat currency fields)
+ - https://bootswatch.com (themes for bootstrap)
+ - https://reactrouter.com (used for creation routes)
+ - https://github.com/axios/axios (used for http request)
+ - https://codeseven.github.io/toastr (used for system notifications)create
+ - https://www.npmjs.com/package/currency-formatter (used for formmat currency fields)
