@@ -1,4 +1,4 @@
-Comandos executados:
+<h1>Comandos executados:</h1>
 
 nodejs
  - 
@@ -18,10 +18,12 @@ yarn
  - yarn add axios (used for http request)
  - yarn add toastr
  - yarn add currency-formatter
+ - yarn add primereact primeicons classnames react-transition-group
 
-Tecnologias utilizadas:
+<h1>Tecnologias utilizadas:</h1>
  - https://bootswatch.com (themes for bootstrap)
  - https://reactrouter.com (used for creation routes)
  - https://github.com/axios/axios (used for http request)
- - https://codeseven.github.io/toastr (used for system notifications)create
+ - https://codeseven.github.io/toastr (used for system notifications)
  - https://www.npmjs.com/package/currency-formatter (used for formmat currency fields)
+ - https://www.primefaces.org/primereact (react components)
