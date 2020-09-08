@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/selectMenu'
-import LancamentosTable from './lancamentosTable'
+import LancamentosTable from './lancamentoTable'
 import LancamentoService from '../../app/service/lancamentoService'
 import LocalStorageService from '../../app/service/localStorageService'
 import * as messages from '../../components/toastr'
@@ -12,7 +12,7 @@ import * as messages from '../../components/toastr'
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 
-class ConsultaLancamentos extends React.Component {
+class LancamentoConsulta extends React.Component {
 
     constructor() {
         super()
@@ -164,4 +164,4 @@ class ConsultaLancamentos extends React.Component {
 
 }
 
-export default withRouter(ConsultaLancamentos)
+export default withRouter(LancamentoConsulta)

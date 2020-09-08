@@ -26,4 +26,4 @@ yarn
  - https://github.com/axios/axios (used for http request)
  - https://codeseven.github.io/toastr (used for system notifications)
  - https://www.npmjs.com/package/currency-formatter (used for formmat currency fields)
- - https://www.primefaces.org/primereact (react components)
+ - https://www.primefaces.org/primereact (react components library)
