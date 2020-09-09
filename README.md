@@ -1,4 +1,4 @@
-#minhas-financas-app
+# minhas-financas-app
 Projeto criado com intuito de estudar react js
 
 Comandos executados:
