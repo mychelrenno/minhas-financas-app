@@ -1,30 +1,51 @@
 import React from 'react'
 
-import { Route, Switch, HashRouter } from 'react-router-dom'
+import { Route, Switch, HashRouter, Redirect } from 'react-router-dom'
+
 import Login from '../views/login'
 import Home from '../views/home'
 import UsuarioCadastro from '../views/usuarioCadastro'
-import CadastroTask from '../views/cadastroTask'
-import ListaTask from '../views/listaTask'
 import LancamentoConsulta from '../views/lancamentos/lancamentoConsulta'
 import LancamentoCadastro from '../views/lancamentos/lancamentoCadastro'
+import { AuthConsumer } from '../main/provedorAutenticacao'
 
-function Rotas() {
+function RotaAutenticada({ component: Component, isUsuarioAutenticado, ...props }) {
+
+    return (
+        <Route {...props} render={(componentProps) => {
+            if (isUsuarioAutenticado) {
+                return (
+                    <Component {...componentProps} />
+                )
+            } else {
+                return (
+                    <Redirect to={{ pathname: '/login', state: { from: componentProps.location } }} />
+                )
+            }
+        }} />
+    )
+}
+
+function Rotas(props) {
     return (
         <HashRouter>
             <Switch>
                 <Route path="/login" component={Login} />
-                <Route path="/home" component={Home} />
                 <Route path="/usuario-cadastro" component={UsuarioCadastro} />
-                <Route path="/lancamento-consulta" component={LancamentoConsulta} />
-                <Route path="/lancamento-cadastro" component={LancamentoCadastro} />
-                
-                <Route path="/cadastro-task/:task" component={CadastroTask} />
-                <Route path="/cadastro-task" component={CadastroTask} />
-                <Route path="/lista-task" component={ListaTask} />
+
+                <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} exact path="/" component={Home} />
+                <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/home" component={Home} />
+                <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/lancamento-consulta" component={LancamentoConsulta} />
+                <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/lancamento-cadastro/:id?" component={LancamentoCadastro} />
             </Switch>
         </HashRouter>
     )
 }
 
-export default Rotas
+export default () => (
+    <AuthConsumer>
+        {
+            (context) => (<Rotas isUsuarioAutenticado={context.isAutenticado} />)
+        }
+    </AuthConsumer>
+)

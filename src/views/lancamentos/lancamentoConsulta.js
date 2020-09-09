@@ -46,22 +46,26 @@ class LancamentoConsulta extends React.Component {
         }
         this.lancamentoService.consultar(lancamentoFiltro)
             .then(response => {
-                this.setState({ lancamentos: response.data })
+                const lista = response.data
+                if (lista.length < 1) {
+                    messages.mensagemAlerta('Nenhum resultado encontrado.')
+                }
+                this.setState({ lancamentos: lista })
             }).catch(error => {
                 console.log(error)
             })
     }
 
     editar = (id) => {
-        console.log('Editando o lançamento: ' + id);
+        this.props.history.push(`/lancamento-cadastro/${id}`)
     }
 
     abrirConfirmacao = (lancamento) => {
-        this.setState({showConfirmDialog: true, lancamentoDeletar: lancamento})
+        this.setState({ showConfirmDialog: true, lancamentoDeletar: lancamento })
     }
 
     cancelarDelecao = () => {
-        this.setState({showConfirmDialog: false, lancamentoDeletar: {}})
+        this.setState({ showConfirmDialog: false, lancamentoDeletar: {} })
     }
 
     deletar = () => {
@@ -74,6 +78,27 @@ class LancamentoConsulta extends React.Component {
                 messages.mensagemSucesso('Lançamento deletado com sucesso.')
             }).catch(error => {
                 messages.mensagemErro('Ocorreu um erro ao tentar deletar o lançamento.')
+            })
+    }
+
+    preparaFormularioCadastro = () => {
+        this.props.history.push('/lancamento-cadastro')
+    }
+
+    alterarStatus = (lancamento, status) => {
+        this.lancamentoService.alterarStatus(lancamento.id, status)
+            .then(response => {
+                const lancamentos = this.state.lancamentos
+                const index = lancamentos.indexOf(lancamento)
+                if (index !== -1) {
+                    lancamento['status'] = status
+                    lancamentos[index] = lancamento
+                    this.setState({ lancamentos })
+                }
+                messages.mensagemSucesso('Status atualizado com sucesso.')
+            })
+            .catch(error => {
+                messages.mensagemSucesso(error.response.data)
             })
     }
 
@@ -129,8 +154,17 @@ class LancamentoConsulta extends React.Component {
                                     lista={tipos} />
                             </FormGroup>
 
-                            <button onClick={this.buscar} type="button" className="btn btn-success">Buscar</button>
-                            <button type="button" className="btn btn-danger">Cadastrar</button>
+                            <button onClick={this.buscar}
+                                type="button"
+                                className="btn btn-success">
+                                <i className="pi pi-search"></i> Buscar
+                                </button>
+
+                            <button onClick={this.preparaFormularioCadastro}
+                                type="button"
+                                className="btn btn-danger">
+                                <i className="pi pi-plus"></i> Cadastrar
+                                </button>
                         </div>
                     </div>
                 </div>
@@ -142,7 +176,8 @@ class LancamentoConsulta extends React.Component {
                         <div className="bs-component">
                             <LancamentosTable lancamentos={this.state.lancamentos}
                                 deleteAction={this.abrirConfirmacao}
-                                editAction={this.editar} />
+                                editAction={this.editar}
+                                alterarStatusAction={this.alterarStatus} />
                         </div>
                     </div>
                 </div>
@@ -152,7 +187,7 @@ class LancamentoConsulta extends React.Component {
                         visible={this.state.showConfirmDialog}
                         style={{ width: '50vw' }}
                         footer={confirmDialogFooter}
-                        onHide={ () => this.setState({showConfirmDialog: false}) }>
+                        onHide={() => this.setState({ showConfirmDialog: false })}>
 
                         <p>Confirma a exclusão deste lançamento?</p>
                     </Dialog>

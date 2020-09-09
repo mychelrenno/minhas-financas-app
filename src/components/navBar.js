@@ -1,6 +1,7 @@
 import React from 'react'
 
 import NavbarItem from './navBarItem'
+import { AuthContext } from '../main/provedorAutenticacao'
 
 class NavBar extends React.Component {
 
@@ -27,7 +28,7 @@ class NavBar extends React.Component {
             <div className="container">
                 <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
 
-                    <a className="navbar-brand" href="https://bootswatch.com/">Minhas Finanças</a>
+                    <a className="navbar-brand" href="#/home">Minhas Finanças</a>
 
                     <button className={`navbar-toggler ${this.state.collapsed}`}
                         type="button"
@@ -42,10 +43,10 @@ class NavBar extends React.Component {
 
                     <div className={`navbar-collapse collapse ${this.state.show}`} id="navbarColor01">
                         <ul className="navbar-nav mr-auto">
-                            <NavbarItem href="#/home" label="Home" />
-                            <NavbarItem href="#/usuario-cadastro" label="Usuários" />
-                            <NavbarItem href="#/lancamento-consulta" label="Lançamentos" />
-                            <NavbarItem href="#/login" label="Login" />
+                            <NavbarItem render={this.context.isAutenticado} href="#/home" label="Home" />
+                            <NavbarItem render={this.context.isAutenticado} href="#/lancamento-consulta" label="Lançamentos" />
+                            <NavbarItem render={this.context.isAutenticado} href="#/usuario-cadastro" label="Usuários" />
+                            <NavbarItem render={this.context.isAutenticado} onClick={this.context.encerrarSessao} href="#/login" label="Sair" />
                         </ul>
                     </div>
 
@@ -54,5 +55,7 @@ class NavBar extends React.Component {
         )
     }
 }
+
+NavBar.contextType = AuthContext;
 
 export default NavBar
